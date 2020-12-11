@@ -71,8 +71,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void renderList() {
-        Log.i("DEBUG", "Rendering list");
-
         listView = findViewById(R.id.listView);
         arrayList = new ArrayList<>();
         getMusic();
@@ -83,91 +81,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void getMusic() {
-        /*Log.i("DEBUG", "Getting music");
-
-        ContentResolver contentResolver = getContentResolver();
-        Uri songUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
-        Cursor songCursor = contentResolver.query(songUri, null, null, null, null);
-
-        File f = new File("/storage/emulated/0/Music");
-        Log.v("Files",f.exists()+"");
-        Log.v("Files",f.isDirectory()+"");
-        Log.v("Files", Arrays.toString(f.listFiles()));
-
-        Log.i("DEBUG", String.valueOf(songUri));
-        if (songCursor == null) {
-            Log.i("DEBUG", "Cursor null");
-        }
-        if (!songCursor.moveToFirst()) {
-            Log.i("DEBUG", "Cursor.moveToFirst() == false");
-        }
-
-        if (songCursor != null && songCursor.moveToFirst()) {
-            Log.i("DEBUG", "inside");
-
-            int songTitle = songCursor.getColumnIndex(MediaStore.Audio.Media.TITLE);
-            int songArtist = songCursor.getColumnIndex(MediaStore.Audio.Media.ARTIST);
-
-            do {
-                String currentTitle = songCursor.getString(songTitle);
-                String currentArtist = songCursor.getString(songArtist);
-
-                Log.i("DEBUG", currentTitle);
-
-                arrayList.add(currentTitle + "\n" + currentArtist);
-            } while (songCursor.moveToNext());
-
-            songCursor.close();
-        }*/
-
-        /*// String[] STAR = { "*" };  //it is projection you can modify it according to your need
-        String sortOrder = MediaStore.Audio.Media.TITLE + " ASC";
-        String[] selectionArgs = null;
-        Uri allsongsuri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
-        String selection = MediaStore.Audio.Media.IS_MUSIC + " != 0";  // check for music files
-
-        Cursor cursor = getContentResolver().query(allsongsuri,null,selection,selectionArgs,sortOrder );
-
-        if (cursor != null) {
-            if (cursor.moveToFirst()) {
-                do {
-                    String song_name = cursor
-                            .getString(cursor
-                                    .getColumnIndex(MediaStore.Audio.Media.DISPLAY_NAME));
-                    int song_id = cursor.getInt(cursor
-                            .getColumnIndex(MediaStore.Audio.Media._ID));
-
-                    String fullpath = cursor.getString(cursor
-                            .getColumnIndex(MediaStore.Audio.Media.DATA));
-
-
-                    String album_name = cursor.getString(cursor
-                            .getColumnIndex(MediaStore.Audio.Media.ALBUM));
-                    int album_id = cursor.getInt(cursor
-                            .getColumnIndex(MediaStore.Audio.Media.ALBUM_ID));
-
-                    String artist_name = cursor.getString(cursor
-                            .getColumnIndex(MediaStore.Audio.Media.ARTIST));
-                    int artist_id = cursor.getInt(cursor
-                            .getColumnIndex(MediaStore.Audio.Media.ARTIST_ID));
-
-                    arrayList.add(song_name + "\n" + fullpath);
-
-                } while (cursor.moveToNext());
-
-            }
-            cursor.close();
-        }*/
-
         arrayList = new ArrayList<>();
         Cursor cursor = getContentResolver().query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, null, null, null, null);
 
-        Log.i("DEBUG CURSOR", cursor.moveToNext()+"");
         while(cursor.moveToNext()) {
             String name = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.TITLE));
             arrayList.add(name);
         }
-
         cursor.close();
     }
 }
